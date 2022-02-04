@@ -1,4 +1,4 @@
-version: '3.9'
+version: '3.3'
 
 services:
   mariadb:
@@ -54,11 +54,11 @@ volumes:
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/home/dbanzizi/wp'
+      device: '/Users/${USER}/wp'
 
   db-data:
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/home/dbanzizi/db'
+      device: '/Users/${USER}/db'
