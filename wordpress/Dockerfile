@@ -5,20 +5,16 @@ RUN apt-get update -y && apt-get upgrade -y
 RUN apt-get install php7.3 php7.3-fpm wget -y
 RUN apt-get install php-json php-xmlrpc php-curl php-gd php-xml php-mysql php-mbstring -y
 
-RUN wget https://wordpress.org/latest.tar.gz && \
-    tar -xzvf latest.tar.gz
+RUN     wget -P /usr/local/bin https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 
-RUN mkdir -p /var/www
+RUN     chmod -R 777 /usr/local/bin/wp-cli.phar
+RUN     mv /usr/local/bin/wp-cli.phar /usr/local/bin/wp 
 
-RUN mv ./wordpress /var/www
+RUN     mkdir -p /var/www/wordpress
 
 COPY ./src/wp-config.php /var/www/wordpress
 
-COPY ./src/index.php /var/www
-
-RUN chown -R www-data:www-data /var/www/*
-RUN chmod 744 /var/www/*
-
+RUN     chmod g+w /var/www/wordpress/wp-config.php
 
 COPY ./src/*sh ./
 
