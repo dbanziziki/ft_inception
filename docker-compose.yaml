@@ -54,10 +54,10 @@ volumes:
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/home/${USER}/wp' 
+      device: '/Users/${USER}/wp'
   db-data:
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/home/${USER}/db'
+      device: '/Users/${USER}/db'

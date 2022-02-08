@@ -3,12 +3,12 @@ FROM debian:buster
 RUN apt-get update -y && apt-get upgrade -y
 
 RUN apt-get install php7.3 php7.3-fpm wget -y
-RUN apt-get install php-json php-xmlrpc php-curl php-gd php-xml php-mysql php-mbstring -y
+RUN apt-get install php-json php-xmlrpc php-curl php-gd less sudo curl php-xml php-mysql php-mbstring -y
 
 RUN     wget -P /usr/local/bin https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 
 RUN     chmod -R 777 /usr/local/bin/wp-cli.phar
-RUN     mv /usr/local/bin/wp-cli.phar /usr/local/bin/wp 
+RUN     mv /usr/local/bin/wp-cli.phar /usr/local/bin/wp
 
 RUN     mkdir -p /var/www/wordpress
 
