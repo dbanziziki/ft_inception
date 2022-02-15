@@ -1,17 +1,15 @@
-FROM debian:buster
+FROM alpine:3.14
 
-RUN apt-get update -y
-RUN apt-get upgrade -y
+VOLUME ["/sys/fs/cgroup"]
 
-RUN apt-get install mariadb-server -y
-COPY ./src/init.sh /init.sh
+RUN apk update && apk upgrade
 
-RUN chmod 777 /init.sh
+RUN apk add mariadb mariadb-common mariadb-client openrc
 
-EXPOSE 3306
-COPY ./src/my.cnf /etc/mysql/mariadb.conf.d/
+COPY ./src/setup_db.sql ./
 
-COPY /src/init.sh .
+COPY ./src/init.sh ./
 
-CMD ["/bin/bash", "init.sh"]
+COPY ./src/my.cnf /etc/
 
+CMD ["/bin/sh", "init.sh"]

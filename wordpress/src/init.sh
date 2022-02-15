@@ -15,7 +15,7 @@ wp core download --allow-root
 wp core install --allow-root --url=$WP_URL --title=$WP_TITLE --admin_user=$WP_ADMIN\
                                 --admin_password=$WP_ADMIN_PASS --admin_email=$WP_ADMIN_MAIL
 
-wp user create --allow-root $WP_USER $WP_USER_MAIL --user_pass=$WP_USER_PASS
+wp user create --allow-root $WP_USER $WP_USER_MAIL --user_pass=$WP_USER_PASS --role=$WP_USER_ROLE
 
 chown -R www-data:www-data /var/www/*
 chmod 744 /var/www/*

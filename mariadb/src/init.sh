@@ -1,11 +1,18 @@
-#!/bin/bash
+#!/bin/sh
 
-service mysql start
+rc default
+/etc/init.d/mariadb setup
+rc-service mariadb start
 
-mysql -u root -e "CREATE USER IF NOT EXISTS '$DB_USER'@'%' IDENTIFIED BY '$DB_PASSWORD';"
-mysql -u root -e "CREATE DATABASE IF NOT EXISTS wordpress;"
-mysql -u root -e "USE wordpress; GRANT ALL PRIVILEGES ON * TO '$DB_USER'@'%' WITH GRANT OPTION; FLUSH PRIVILEGES;"
+sed -i "s|DB_NAME|$DB_NAME|g" setup_db.sql
+sed -i "s|DB_USER|$DB_USER|g" setup_db.sql
+sed -i "s|DB_PASSWORD|$DB_PASSWORD|g" setup_db.sql
+sed -i "s|DB_PASSWORD|$DB_PASSWORD|g" setup_db.sql
 
-service mysql stop
+mysql --skip-password < setup_db.sql
 
-mysqld_safe
+mysql -u root -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$DB_ROOT_PASSWORD'; FLUSH PRIVILEGES;"
+
+rc-service mariadb stop
+
+/usr/bin/mysqld_safe
